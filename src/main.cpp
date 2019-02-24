@@ -23,10 +23,10 @@ int main(int argc, char const *argv[])
 {
     int flags;
 
-    char string[] = "Hi, I've sent this through a socket - client";
+    bool ReceiveData = true;
 
-    char buffer[265];
-
+    char buffer[MAXBUF];
+    buffer[MAXBUF] = {0};
     int my_socket = socket(AF_INET, SOCK_STREAM, 0);
 
     struct sockaddr_in my_address;
@@ -41,8 +41,9 @@ int main(int argc, char const *argv[])
 
     my_address.sin_port = htons(5060);
 
-    while(1){
-
+    
+    //while(1){
+    
         if (my_socket < 0)
 
         {
@@ -66,7 +67,7 @@ int main(int argc, char const *argv[])
             int connect_socket = connect(my_socket, (struct sockaddr *)&my_address, sizeof(my_address));
 
             std::cout<<"Oink"<< connect_socket << std::endl;
-
+            
             if (connect_socket < 0)
 
             {
@@ -80,18 +81,20 @@ int main(int argc, char const *argv[])
                 std::cout<<"Pig"<<std::endl;
                 std::cout<<"This is it gamers, " << connect_socket << std::endl;
                 //send(my_socket, string, strlen(string), 0);
-                for(;;)
-                {
+                //for(;;)
+                //{
                 std::cout << "hi" << std::endl;
-                int reading = recv(connect_socket, buffer, MAXBUF, 0);
+                
+                int reading = recv(my_socket, buffer, MAXBUF, 0);
                 std::cout << "um, hello? " << reading << std::endl;
                 std::cout << "Its a me - Mario! " << buffer << std::endl;
-                }
+                
+                //}
             }
 
         }
 
-    }
+    //}
 
 }
 
